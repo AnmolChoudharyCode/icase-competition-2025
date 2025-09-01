@@ -106,6 +106,8 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    z-index: 1001;
+    position: relative;
 }
 
 .bar {
@@ -114,6 +116,20 @@ body {
     background-color: #333;
     margin: 3px 0;
     transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* Hamburger animation */
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Hero Section */
@@ -576,7 +592,7 @@ body {
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin: 0 1rem;
+    margin: 0 1 rem;
     flex: 1;
     position: relative;
 }
@@ -1030,10 +1046,27 @@ body {
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
         padding: 2rem 0;
         overflow-x: hidden;
+        z-index: 1000;
+        height: calc(100vh - 70px);
     }
 
     .nav-menu.active {
         left: 0;
+    }
+
+    .nav-menu .nav-item {
+        margin: 1rem 0;
+    }
+
+    .nav-menu .nav-link {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        display: block;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-menu .nav-link:hover {
+        background-color: #f8fafc;
     }
 
     .nav-logo .logo-img {
