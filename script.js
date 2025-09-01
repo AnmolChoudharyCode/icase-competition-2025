@@ -7,11 +7,26 @@ hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
+// Close mobile menu when clicking on navigation links
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        
+        // Update active link after a short delay to allow smooth scrolling
+        setTimeout(() => {
+            updateActiveNavLink();
+        }, 100);
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
 
 // Navbar background change on scroll
 window.addEventListener('scroll', () => {
@@ -38,6 +53,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+
+// Active navigation highlighting
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Update active link on scroll
+window.addEventListener('scroll', updateActiveNavLink);
+
+// Set initial active state
+document.addEventListener('DOMContentLoaded', () => {
+    updateActiveNavLink();
 });
 
 // Copy to clipboard functionality
